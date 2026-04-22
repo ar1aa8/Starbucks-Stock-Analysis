@@ -3,7 +3,14 @@ This project builds a small stock analysis product for beginner investors and bu
 # Project Title
 Starbucks Stock Performance Dashboard with DuPont Analysis
 ## 1. Problem & User
-This project develops a Starbucks Stock Performance Dashboard to help beginner investors interested in consumer sector stocks and business school students understand the historical performance of Starbucks stock. The dashboard aims to present stock price trends, return patterns, trading volume changes, and key time periods in a simple and visually accessible way.In addition, the dashboard includes a DuPont analysis to help users understand Starbucks’ financial performance by decomposing return on equity (ROE) into profitability, asset efficiency, and financial leverage.
+This project analyses the historical stock performance of Starbucks to help beginner investors and business students better understand how a company’s share price behaviour can be examined using Python. The analysis focuses on stock price trends, return patterns, trading volume, volatility, comparison with a market proxy, and DuPont analysis.
+
+The main aim is to provide a clear and accessible view of how Starbucks performed over time, what risk patterns can be observed from daily and monthly returns, and how accounting-based financial ratios can help explain shareholder returns.
+
+Target users:
+- Beginner investors interested in understanding stock behaviour
+- Business and finance students learning financial data analysis
+- Users who want a simple example of Python-based stock analysis
 
 ## 2. Data 
 Data sources:
@@ -22,95 +29,108 @@ Close
 Adj Close
 Volume
 Derived variables
-daily_return: percentage change in daily closing price
-year_month: month identifier created from the date
-monthly_price: closing price on the last trading day of each month
-monthly_return: percentage change in monthly closing price
+sbux_daily.csv– Starbucks daily stock data
+sbux_monthly.csv – Starbucks monthly stock data
+sbux_security.csv – Starbucks security identifier and company information
+sp500_financials_price_data.csv` – price dataset used to construct an S&P 500 market proxy
 Additional financial statement fields used for DuPont analysis:
 - Net Income
 - Revenue
 - Total Assets
 - Shareholders’ Equity
 ## 3. Methods
-The analysis was carried out in Python using a notebook-based workflow. The main steps are as follows:
+The analysis was carried out in Python using pandas, matplotlib, and seaborn. The workflow includes data cleaning, return calculation, descriptive analysis, visualisation, market comparison, and DuPont decomposition.
 
-Data collection
+### 3.1 Data cleaning and preparation
+The daily, monthly, and security datasets were loaded from CSV files. The main preparation steps included:
+- converting date columns to datetime format
+- sorting data by date
+- removing missing values in key fields
+- removing duplicate rows
+- converting numerical columns into proper numeric format
+- standardising column names where necessary
 
-Historical Starbucks stock data was downloaded from WRDS and Yahoo Finance using yfinance.
+The security dataset was also cleaned and merged with the stock datasets using `gvkey` and `iid`.
 
-Data cleaning and preparation
+### 3.2 Daily stock analysis
+Daily closing prices were analysed to identify the long-term movement of Starbucks stock. Daily returns were calculated using percentage change in the closing price.
 
-The date field was converted into datetime format.
-The dataset was sorted chronologically.
-Relevant columns were selected for analysis.
-Missing values were checked and handled where necessary.
-Daily stock performance analysis
+Main tasks:
+- plot daily stock price
+- calculate `daily_return`
+- identify highest and lowest daily returns
+- inspect extreme daily return values
+- plot distribution of daily returns
+- calculate rolling volatility using a moving standard deviation
+- summarise average return, volatility, and trading volume by year
 
-Daily closing prices were plotted to show short-term and long-term price movement.
-Daily returns were calculated using:
-python
-Copy
-daily_return = Close.pct_change()
-The highest and lowest daily returns were identified to highlight extreme movements.
-Monthly stock performance analysis
+### 3.3 Monthly stock analysis
+Monthly stock data was analysed separately to provide a clearer long-term perspective. Monthly closing price, trading volume, return, and cumulative return were examined.
 
-Daily data was aggregated to monthly level by selecting the last available trading day in each month.
-Monthly returns were calculated using percentage change in monthly closing prices.
-Monthly price and return charts were created to improve trend interpretation.
-Trading volume analysis
+Main tasks:
+- plot monthly closing price
+- plot monthly trading volume
+- analyse monthly return distribution
+- calculate cumulative monthly return
+- summarise yearly average return, volatility, and trading volume
+- calculate monthly price range percentage using high and low prices
 
-Daily trading volume was plotted to identify changes in market activity.
-Periods of unusually high volume were compared with major price movements.
-Visualisation
+### 3.4 Market comparison
+To compare Starbucks with the broader market, a simple market proxy was constructed from the S&P 500 price dataset. The first column was converted to a date field, price columns were identified, and their cross-sectional average was used to form a market proxy series. This proxy was then normalised to a base value of 100.
 
-Line charts and return plots were created using Python libraries slike matplotlib.
-Key time periods were highlighted to support interpretation of stock performance.
-Interpretation
+Starbucks daily and monthly prices were also normalised to 100 and compared with the market proxy through line charts and descriptive statistics.
 
-The dashboard uses simple descriptive statistics and visual indicators to help non-expert users understand Starbucks stock behaviour over time.
+### 3.5 DuPont analysis
+To complement the stock market analysis, a DuPont analysis was used to break down return on equity (ROE) into three components:
 
-DuPont analysis  
-To complement stock market analysis with accounting-based performance evaluation, a DuPont analysis was added. Return on equity (ROE) was decomposed into three components:
-
-ROE = Profit Margin × Asset Turnover × Equity Multiplier
+**ROE = Profit Margin × Asset Turnover × Equity Multiplier**
 
 where:
-- Profit Margin = Net Income / Revenue
-- Asset Turnover = Revenue / Total Assets
-- Equity Multiplier = Total Assets / Shareholders’ Equity
+- **Profit Margin = Net Income / Revenue**
+- **Asset Turnover = Revenue / Total Assets**
+- **Equity Multiplier = Total Assets / Equity**
 
-This method helps explain whether Starbucks’ shareholder returns were mainly driven by profitability, operating efficiency, or financial leverage. Annual financial statement data was used for this part of the analysis.
+This helps show whether Starbucks’ ROE was mainly influenced by profitability, operating efficiency, or capital structure.
 ## 4. Key Findings
-Starbucks stock shows clear periods of growth, decline, and recovery across the selected time period.
-Daily returns are more volatile than monthly returns, which means monthly analysis provides a clearer picture of the overall trend.
-Large price changes are often accompanied by increases in trading volume, suggesting higher market attention during these periods.
-The most extreme positive and negative daily returns help identify dates when the stock experienced unusually strong market reactions.
-Combining price, return, and volume charts provides a more complete understanding of stock performance than looking at price alone.
-Key DuPont Analysis Insights
-- ROE remained negative throughout 2020–2023, driven primarily by balance sheet structure rather than poor operations
-- Profit margin improved steadily, showing strong underlying business profitability
-- Asset turnover stayed stable, with no decline in operational efficiency
-- Negative equity multiplier (negative shareholder equity) is the sole root cause of sustained negative ROE
+The analysis produced several main findings:
+
+- Starbucks’ stock price showed clear periods of growth, decline, and recovery over time.
+- Daily returns were much more volatile than monthly returns, so monthly data gave a clearer picture of the broader trend.
+- Extreme positive and negative daily returns highlighted dates with unusually strong market reactions.
+- Periods of higher volatility often coincided with larger changes in trading volume.
+- The comparison with the market proxy showed that Starbucks did not always move in line with the broader market, suggesting the presence of firm-specific influences.
+- The monthly cumulative return chart showed the long-term change in shareholder value more clearly than daily price movements alone.
+
+### DuPont analysis findings
+- ROE remained negative during 2020–2023.
+- This negative ROE was not mainly caused by weak profitability.
+- Profit margin improved over time, suggesting that operating performance remained relatively strong.
+- Asset turnover stayed fairly stable, indicating no major deterioration in efficiency.
+- The main reason for negative ROE was negative equity, which caused the equity multiplier to become negative.
+
+These results show that ROE should not always be interpreted on its own, especially when a company has an unusual balance sheet structure.
 ## 5. How to run
 To run this project locally, follow these steps:
 
 Make sure Python is installed.
-Install the required libraries:
-bash
-Copy
-pip install pandas matplotlib seaborn yfinance
-Open Jupyter Notebook:
-bash
-Copy
-jupyter notebook
-Run the notebook file step by step:
-download the stock data
-clean and prepare the dataset
-calculate daily and monthly returns
-generate charts and summary outputs
-run the DuPont analysis section using annual financial statement data
-Required files
-Starbucks_Stock_Performance_Dashboard.ipynb
+Install the required Python libraries:
+```bash
+pip install pandas matplotlib seaborn
+Files needed
+Make sure the following files are available in the project folder or update the file paths in the code:
+
+sbux_daily.csv
+sbux_monthly.csv
+sbux_security.csv
+sp500_financials_price_data.csv
+Run steps
+Open the Python notebook or script.
+Load the CSV files.
+Run the daily stock analysis section.
+Run the monthly stock analysis section.
+Run the security data cleaning and merge section.
+Run the S&P 500 proxy construction and comparison section.
+Run the DuPont analysis section.
 README.md
 If the notebook uses a saved CSV file instead of direct online download, make sure the data file is stored in the same working directory.
 
@@ -120,14 +140,14 @@ Repository / submission link: [please insert GitHub link or submission platform 
 Demo screenshots: [optional – insert image links or screenshot names if available]
 ## 7. Limitations & next steps
 Limitations
-This project focuses only on Starbucks, so it does not provide comparison with competitors or market benchmarks.
-The dashboard mainly focuses on historical stock price, trading volume, and a limited set of accounting indicators. It does not yet incorporate broader macroeconomic variables, analyst expectations, or external news data.
-The analysis is descriptive and does not attempt to predict future stock prices.
-Yahoo Finance is a convenient public data source, but it may be less precise than professional financial databases.
+The market benchmark is a simple proxy constructed from available S&P 500 constituent price columns, so it is not identical to the official index.
+Some annual financial statement values for the DuPont analysis were entered manually, so there is a risk of input error.
+The project focuses on a single company and does not compare Starbucks with direct competitors.
+The analysis is descriptive rather than predictive.
+No regression analysis or formal statistical testing was included.
 Next steps
-Compare Starbucks with other consumer sector firms, such as McDonald’s or Coca-Cola.
-Add benchmark analysis against the S&P 500 index.
-Include additional indicators such as moving averages, rolling volatility, or relative strength measures.
-Mark major company events, such as earnings announcements, on the charts.
-Develop the notebook into a more interactive dashboard using Streamlit or Plotly Dash.
-Extend the financial analysis by including liquidity, profitability, and solvency ratios in addition to DuPont analysis
+Compare Starbucks with similar firms such as McDonald’s or Coca-Cola.
+Use an official market index series instead of a manually constructed proxy.
+Include additional indicators such as moving averages, drawdown, or annualised volatility.
+Add major corporate events to the timeline for deeper interpretation.
+Develop the project into an interactive dashboard using Streamlit or Plotly Dash
