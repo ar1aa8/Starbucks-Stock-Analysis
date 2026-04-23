@@ -19,7 +19,6 @@ Data sources:
 Ticker symbol: SBUX
 Access date: [2026-04-19]
 Data frequency: Daily
-Time period: [2018-01-01]
 Key fields used
 Date
 Open
@@ -133,6 +132,7 @@ Run the S&P 500 proxy construction and comparison section.
 Run the DuPont analysis section.
 README.md
 If the notebook uses a saved CSV file instead of direct online download, make sure the data file is stored in the same working directory.
+
 
 ## 6. Product link / Demo
 Notebook file: sbux_analysis_project.ipynb
