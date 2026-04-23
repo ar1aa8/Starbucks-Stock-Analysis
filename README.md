@@ -131,21 +131,19 @@ Run the security data cleaning and merge section.
 Run the S&P 500 proxy construction and comparison section.
 Run the DuPont analysis section.
 README.md
+```
 If the notebook uses a saved CSV file instead of direct online download, make sure the data file is stored in the same working directory.
 
 
-## 6. Product link / Demo
-Notebook file: sbux_analysis_project.ipynb
-Repository / submission link: [please insert GitHub link or submission platform link]
-Demo screenshots: [optional – insert image links or screenshot names if available]
-## 7. Limitations & next steps
+## 6. Limitations & next steps
 Limitations
 The market benchmark is a simple proxy constructed from available S&P 500 constituent price columns, so it is not identical to the official index.
 Some annual financial statement values for the DuPont analysis were entered manually, so there is a risk of input error.
 The project focuses on a single company and does not compare Starbucks with direct competitors.
 The analysis is descriptive rather than predictive.
 No regression analysis or formal statistical testing was included.
-Next steps
+
+## 7. Next steps
 Compare Starbucks with similar firms such as McDonald’s or Coca-Cola.
 Use an official market index series instead of a manually constructed proxy.
 Include additional indicators such as moving averages, drawdown, or annualised volatility.
